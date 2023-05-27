@@ -1,19 +1,23 @@
 # nosnap
 
-A script to remove Snap completely from Ubuntu.
+A bash script to remove Snap completely from Ubuntu.
 
-**Reference**
-<br>https://itsfoss.com/remove-snap
-<br>https://github.com/grobo021/snap-nuke
+### Usage
 
-## Usage
-**Ubuntu**
 ```bash
 curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nosnap.sh | bash
 ```
 
-## Support
+<details><summary>Remove cups</summary>
 
+```bash
+curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nocups.sh | bash
+```
+
+</details>
+
+### Compatibility
+
+- [x] Ubuntu 23.04
 - [x] Ubuntu 22.10
-- [x] Ubuntu 22.04(.2) L>TS
-
+- [x] Ubuntu 22.04(.2) LTS
