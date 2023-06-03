@@ -1,12 +1,12 @@
 # nosnap
-A bash script to remove Snap completely from Ubuntu.
+A bash script to remove snap package manager completely from Ubuntu.
 
 ### Usage
 ```bash
 curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nosnap.sh | bash
 ```
 
-<details><summary>Remove cups</summary>
+<details><summary>Remove CUPS (Unix printing system)</summary>
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nocups.sh | bash
