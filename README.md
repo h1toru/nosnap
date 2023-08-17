@@ -9,7 +9,7 @@ curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nosnap.sh | ba
 ### Compatibility
 - [x] Ubuntu 23.04
 - [x] Ubuntu 22.10
-- [x] Ubuntu 22.04.X LTS
+- [x] Ubuntu 22.04.xx LTS
 
 ### Reference
 - https://itsfoss.com/remove-snap
