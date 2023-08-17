@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
+# by h1toru (GitHub)
 
 cat << EOF
 
@@ -18,7 +19,7 @@ if [ "$(cat /etc/os-release | sed -n 's|^ID=||p')" != 'ubuntu' ]; then
 fi
 
 # detect root
-if [ "$EUID" == '0' ]; then
+if [ "${EUID:-$(id -u)}" -eq '0' ]; then
 cat << EOF
 
 	┌──────────────────────────────────────────────────────────────────────┐
@@ -30,7 +31,7 @@ EOF
 exit 1
 fi
 
-# confirmation-msg
+# confirmation message
 while true; do
 	read -p "Are you sure to remove Snap completely? [Y/n] " yn
 	case $yn in
@@ -40,44 +41,45 @@ while true; do
 	esac
 done
 
-# remove snap packages
+# remove snap's packages
 {	snap list | awk '!/^Name|^bare|^core|^snapd / {print $1}'
 	snap list | awk '/^bare/ {print $1}'
 	snap list | awk '/^core/ {print $1}'
 	snap list | awk '/^snapd / {print $1}'
 } | while read i; do sudo snap remove --purge $i; done
 
-# stop snap services
+# stop and disable snap services (systemd)
 sudo systemctl stop snapd
 #sudo systemctl stop snapd.service
 #sudo systemctl stop snapd.socket
-sudo systemctl stop snapd.seeded.service
+#sudo systemctl stop snapd.seeded.service
 
 sudo systemctl disable snapd
 #sudo systemctl disable snapd.service
 #sudo systemctl disable snapd.socket
-sudo systemctl disable snapd.seeded.service
+#sudo systemctl disable snapd.seeded.service
 
-# unmount snap partition(s) (mounted on /snap)
+# unmount snap partition(s) (if exist, mounted on /snap)
 for i in $(df -h | awk '/snap/ {print $6}'); do
 	sudo umount $i
 done
 
-# remove cache
+# remove snap cache
 sudo rm -rf /var/cache/snapd
 
 # remove snap from apt
-sudo apt -y purge --auto-remove snapd
+sudo apt purge -y --autoremove snapd
 
 # reinstall cups
-sudo apt -y reinstall cups
+sudo apt reinstall -y cups
 
-# remove leftover files
+# remove leftover files (common)
 rm -rf ~/snap
 sudo rm -rf /snap
 sudo rm -rf /var/snap
 sudo rm -rf /var/lib/snapd
 
+# advanced remove
 #sudo find / -type 'd' -iname '*snap' -o -iname '*snapd' 2>/dev/null |
 #egrep -iv 'nosnap|snapshot|/media' |
 #while read I; do sudo rm -rf $I; done
@@ -89,7 +91,7 @@ Pin: release a=*
 Pin-Priority: -10
 EOF
 
-# output-msg
+# output message
 cat << EOF
 
 	┌─────────────────────────────────────────────────────────────────────┐
