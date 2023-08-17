@@ -98,13 +98,3 @@ cat << EOF
 	└─────────────────────────────────────────────────────────────────────┘
 
 EOF
-
-# cups
-while true; do
-	read -p "Did you also want to remove Cups? [Y/n] " yn
-	case $yn in
-		[Yy]) curl -fsSL https://raw.githubusercontent.com/h1toru/nosnap/master/nocups.sh | bash ;;
-		[Nn]) break ;;
-		*) echo "Please input [n] to cancel." ;;
-	esac
-done
